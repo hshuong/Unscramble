@@ -1,5 +1,8 @@
 package com.example.unscramble.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.unscramble.data.allWords
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +15,9 @@ class GameViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     // convert StateFlow cua _uiState sang dang read only
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
+
+    var userGuess by mutableStateOf("")
+        private set
 
     private lateinit var currentWord: String
 
@@ -37,6 +43,10 @@ class GameViewModel: ViewModel() {
             tempWord.shuffle()
         }
         return String(tempWord)
+    }
+
+    fun updateUserGuess(guessedWord: String){
+        userGuess = guessedWord
     }
 
     fun resetGame() {
